@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name": "detach-index",
+    "version": "1.0.0",
+    "description": "chrome新建标签页插件",
+    "icons": {
+        "16": "img/16.png",
+        "48": "img/48.png",
+        "128": "img/128.png"
+    },
+    "browser_action": {
+        "default_icon": "img/16.png",
+        "default_title": "detach-index"
+    },
+    "permissions": [
+        "tabs",
+        "notifications",
+        "webRequest",
+        "storage"
+    ],
+    "homepage_url": "https://www.baidu.com",
+    "chrome_url_overrides": {
+        "newtab": "newtab.html"
+    }
+}
