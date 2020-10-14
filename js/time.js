@@ -51,13 +51,42 @@ $(document).ready(function () {
         initDate();
     }, 2000);
 
+});
 
-    $.ajax({
-        type: "get",
-        url: "http://localhost:9045/test",
-        success: function (response) {
-            console.log(response)
-        }
-    });
+$(".search-icon").click(function (e) {
+    e.preventDefault();
+    var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
+    window.open(url)
+    $(".search-input").val("");
+});
+
+$("body").keypress(function (e) {
+    // e.preventDefault();
+
+    console.log(e.keyCode)
+    if (e.which == 13 && $(".search-input").is(":focus")) {
+        var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
+
+        $(".search-input").val("");
+        window.open(url)
+    }
+
+    // 快捷键
+
+    // S，搜索
+    if (e.keyCode == 83 && $(".search-input").is(":focus") == false) {
+        $(".search-input").focus();
+
+    }
+
 
 });
+
+$(".setting").hover(function () {
+    // over
+    console.log("over")
+}, function () {
+    // out
+    console.log("out")
+}
+);

@@ -1,16 +1,14 @@
 
+/* search css */
 .search-wrapper {
     position: absolute;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    top:50%;
+    top:40%;
     left:50%;
     width: 25%;
 }
-
-
-
 
 .input-holder {
     overflow: hidden;
@@ -38,6 +36,7 @@
     left:0px;
     background: transparent;
     transform: translate(0, 10px);
+    color: rgba(255,255,255,0.8);
 
 }
 
@@ -77,11 +76,56 @@
     background: rgba(255,255,255,0.5)
 }
 
-.close {
+
+@media screen and (max-width: 560px) {
+    .search-wrapper .input-holder {width:200px;}
+}
+
+@media screen and (min-width: 1000) {
+    .search-wrapper {width:450px;}
+}
+
+@media screen and (min-height: 1000px) {
+    .search-wrapper {
+        top: 33%;
+    }
+}
+
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color:  rgba(255,255,255,0.8);
+  font-size: 16px;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:  rgba(255,255,255,0.8);
+  font-size: 16px;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:  rgba(255,255,255,0.8);
+  font-size: 16px;
+}
+
+
+/* setting */
+
+
+@keyframes spin{
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.setting {
     position: absolute;
     z-index: 1;
-    top:24px;
-    right:20px;
+    top:7%;
+    right:10%;
     width:25px;
     height:25px;
     cursor: pointer;
@@ -97,35 +141,33 @@
 }
 
 
-.close::before,.close::after {
+.setting::before,.setting::after {
     position:absolute;
     content:'';
-    background: rgba(255,255,255,0.5);
+    background: rgba(180,180,180,0.5);
     border-radius: 2px;
 }
-.close::before {
+.setting::before {
     width: 5px;
     height: 25px;
     left: 10px;
     top: 0px;
 }
-.close::after {
+.setting::after {
     width: 25px;
     height: 5px;
     left: 0px;
     top: 10px;
 }
 
-@media screen and (max-width: 560px) {
-    .search-wrapper .input-holder {width:200px;}
+.setting:hover{
+    animation: spin 0.5s infinite ease-in-out;
+    animation-iteration-count: 1;
+
 }
 
-@media screen and (min-width: 1000) {
-    .search-wrapper {width:450px;}
-}
+.setting:hover::after,.setting:hover::before{
+    background: rgba(255,255,255,0.8);
+    content:'';
 
-@media screen and (min-height: 1000px) {
-    .search-wrapper {
-        top: 40%;
-    }
 }
