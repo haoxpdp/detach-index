@@ -1,0 +1,131 @@
+
+.search-wrapper {
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top:50%;
+    left:50%;
+    width: 25%;
+}
+
+
+
+
+.input-holder {
+    overflow: hidden;
+    height: 50px;
+    width:100%;
+    background: rgba(0,0,0,0.5);
+    border-radius:3px;
+    position: relative;
+    border-radius: 10px;
+    left: 5px;
+
+}
+
+.search-input {
+    width: 100%;
+    height: 30px;
+    padding:0px 70px 0 10px;
+    border: none;
+    outline:none;
+
+    position: relative;
+    font-size: 16px;
+
+    top:0px;
+    left:0px;
+    background: transparent;
+    transform: translate(0, 10px);
+
+}
+
+.search-icon{
+    width:30px;
+    height:30px;
+    display: inline-block;
+    vertical-align: middle;
+    transform: rotate(45deg);
+    cursor: pointer;
+    margin: 10px;
+    position: relative;
+    float: right;
+    top:-25px;
+
+}
+.search-icon::after{
+    border: 0;
+    width: 14px;
+    height: 14px;
+    left: 0px;
+    top: 0px;
+    border-radius: 16px;
+    border: 4px solid rgba(255,255,255,0.5);
+    content: '';
+    position: absolute;
+}
+
+.search-icon::before{
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 11px;
+    left: 9px;
+    top: 18px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.5)
+}
+
+.close {
+    position: absolute;
+    z-index: 1;
+    top:24px;
+    right:20px;
+    width:25px;
+    height:25px;
+    cursor: pointer;
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    -webkit-transition: all .3s cubic-bezier(0.285, -0.450, 0.935, 0.110);
+    -moz-transition: all .3s cubic-bezier(0.285, -0.450, 0.935, 0.110);
+    transition: all .3s cubic-bezier(0.285, -0.450, 0.935, 0.110);
+    -webkit-transition-delay: 0.2s;
+    -moz-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+
+.close::before,.close::after {
+    position:absolute;
+    content:'';
+    background: rgba(255,255,255,0.5);
+    border-radius: 2px;
+}
+.close::before {
+    width: 5px;
+    height: 25px;
+    left: 10px;
+    top: 0px;
+}
+.close::after {
+    width: 25px;
+    height: 5px;
+    left: 0px;
+    top: 10px;
+}
+
+@media screen and (max-width: 560px) {
+    .search-wrapper .input-holder {width:200px;}
+}
+
+@media screen and (min-width: 1000) {
+    .search-wrapper {width:450px;}
+}
+
+@media screen and (min-height: 1000px) {
+    .search-wrapper {
+        top: 40%;
+    }
+}

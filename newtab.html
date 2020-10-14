@@ -12,7 +12,7 @@
             background-size: cover;
             max-width: 100%;
             width: 100%;
-            font-family: "microsoft yahei light", "microsoft yahei",Helvetica, sans-serif, 等线;
+            font-family: "microsoft yahei light", "microsoft yahei", Helvetica, sans-serif, 等线;
             cursor: default;
             overflow: hidden;
             margin: 0px;
@@ -20,11 +20,13 @@
             background-position: center center;
 
         }
+
         .box {
 
             background-color: inherit;
         }
-        .bg{
+
+        .bg {
             z-index: -10;
             position: fixed;
             left: 0;
@@ -33,16 +35,18 @@
             height: 100%;
             object-fit: cover;
             backface-visibility: hidden;
-            
+
         }
-        .focus{
+
+        .focus {
             filter: blur(5px);
             /* transition-delay: 10; */
-            
+
         }
-        #clock{
+
+        #clock {
             position: fixed;
-            top: 115px;
+            top: 23%;
             margin-left: auto;
             margin-right: auto;
             width: 100%;
@@ -50,52 +54,91 @@
             cursor: pointer;
             transform: scale(1);
         }
-        
-        #clock:hover{
+
+        #clock:hover {
             /* transform: scale(1.1); */
-        
-            transition:500ms;
+
+            transition: 500ms;
             transform: none;
         }
-        #time{
+
+        #time {
             font-size: 50px;
             font-weight: inherit;
             color: #ffffff;
             animation: twinkling 2s infinite ease-in-out;
             animation-iteration-count: 1;
         }
-        @keyframes twinkling{
-            0%{
+
+        .search {
+            position: fixed;
+            top: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            width: 100%;
+
+        }
+
+        #searchBar {
+            border: 0;
+            box-sizing: border-box;
+            font-size: 15px;
+            font-weight: 400;
+            height: 100%;
+            outline: 0;
+            text-overflow: ellipsis;
+
+            height: 40px;
+            padding: 0 70px 0 20px;
+        }
+
+        @keyframes twinkling {
+            0% {
                 opacity: 0;
             }
-            100%{
+
+            100% {
                 opacity: 1;
             }
         }
     </style>
     <!-- <script src="http://libs.baidu.com/jqmobi/1.0.0/jq.ui.min.js"></script> -->
-
+    <link href="css/search.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-    <script src="js/jq-min-1.3.0.js" ></script>
+    <script src="js/jq-min-1.3.0.js"></script>
 
     <div class="box">
         <img class="bg" src="https://w.wallhaven.cc/full/96/wallhaven-96gqz8.jpg" alt="">
 
         <div class="weather">
-            
-        </div>
-        <div id="clock" >
-            <h1 id="time" >10:40</h1>
-        </div>
-        <script src="js/time.js" ></script>
-        
-        <div class="search">
 
         </div>
+        <div id="clock">
+            <h1 id="time">10:40</h1>
+        </div>
+
+        <div class="container">
+            <form>
+                <div class="search-wrapper">
+                    <div class="input-holder">
+                        <input type="text" class="search-input" placeholder="搜索..." />
+                        <span class="search-icon"></span>
+
+                    </div>
+
+                </div>
+                <span class="close"></span>
+            </form>
+        </div>
+        <!-- <div class="search">
+            <input type="text" id="searchBar">
+        </div> -->
 
     </div>
+    <script src="js/time.js"></script>
 
 </body>
 
