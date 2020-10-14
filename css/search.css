@@ -124,8 +124,8 @@
 .setting {
     position: absolute;
     z-index: 1;
-    top:7%;
-    right:10%;
+    top:70px;
+    right:100px;
     width:25px;
     height:25px;
     cursor: pointer;
@@ -161,8 +161,8 @@
 }
 
 .setting:hover{
-    animation: spin 0.5s infinite ease-in-out;
-    animation-iteration-count: 1;
+    /* animation: spin 0.5s infinite ease-in-out;
+    animation-iteration-count: 1; */
 
 }
 
@@ -170,4 +170,14 @@
     background: rgba(255,255,255,0.8);
     content:'';
 
+}
+
+.setting-container{
+    position: absolute;
+    top:105px;
+    right:100px;
+    height: 305px;
+    width: 320px;
+    display: none;
+    background-color: royalblue;
 }

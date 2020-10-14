@@ -82,11 +82,8 @@ $("body").keypress(function (e) {
 
 });
 
-$(".setting").hover(function () {
-    // over
-    console.log("over")
-}, function () {
-    // out
-    console.log("out")
-}
-);
+$(".setting").click(function () {
+    if ($(".setting-container").css("display") == 'none') {
+        $(".setting-container").css("display", 'block')
+    }
+});
