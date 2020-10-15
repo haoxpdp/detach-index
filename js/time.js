@@ -57,18 +57,20 @@ $(".search-icon").click(function (e) {
     e.preventDefault();
     var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
     window.open(url)
+    window.location.href=url;
     $(".search-input").val("");
 });
 
 $("body").keypress(function (e) {
-    // e.preventDefault();
+    e.preventDefault();
 
     console.log(e.keyCode)
     if (e.which == 13 && $(".search-input").is(":focus")) {
         var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
 
-        $(".search-input").val("");
-        window.open(url)
+        window.location.href = url;
+        // $(".search-input").val("");
+        // window.open(url)
     }
 
     // 快捷键
