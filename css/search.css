@@ -172,12 +172,17 @@
 
 }
 
-.setting-container{
+#setting-container{
     position: absolute;
     top:105px;
     right:100px;
     height: 305px;
     width: 320px;
     display: none;
-    background-color: royalblue;
+    background-color: rgba(200,200,200,0.7);
+    z-index: 10;
+}
+
+#setting-container::before{
+    filter: blur(20px)
 }
