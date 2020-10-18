@@ -34,6 +34,7 @@
             height: 100%;
             object-fit: cover;
             backface-visibility: hidden;
+            transition: all 0.2s ease-in-out;
 
         }
 
@@ -86,7 +87,6 @@
 <script src="js/jq-min-1.3.0.js"></script>
 
 <div class="box">
-    <img class="bg twlink" src="https://w.wallhaven.cc/full/96/wallhaven-96gqz8.jpg" alt="">
 
     <div class="weather">
 
@@ -98,15 +98,17 @@
 
     </div>
 
-    <div id="clock">
-        <h1 id="time" class="twlink">开始</h1>
-    </div>
 
     <div class="container">
+        <img class="bg twlink" src="https://w.wallhaven.cc/full/96/wallhaven-96gqz8.jpg" alt="">
+        <div id="clock">
+            <h1 id="time" class="twlink">开始</h1>
+        </div>
+
         <form>
             <div class="search-wrapper">
                 <div class="input-holder twlink">
-                    <input type="text" class="search-input" placeholder="search" onfocus="this.placeholder=''" onblur="this.placeholder='search'"/>
+                    <input type="text" class="search-input" placeholder="search"/>
                     <span class="search-icon"></span>
 
                 </div>
