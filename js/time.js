@@ -14,7 +14,7 @@ $(document).ready(function () {
     setInterval(() => {
         initDate();
     }, 2000);
-
+    initNavigation();
 });
 
 $(".search-icon").click(function (e) {
@@ -60,15 +60,73 @@ $(".setting").click(function () {
     }
 });
 
+
+$(document).on("mousewheel DOMMouseScroll", function (e) {
+    var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) ||
+        (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1));
+    if (delta == -1 && !$(".search-input").is(":focus")) {
+        $(".search-input").focus();
+    }
+    if (delta == 1 && $(".search-input").is(":focus")) {
+        $(".search-input").blur()
+    }
+});
+
 $(".search-input").focus(function () {
-    $(".search-input").attr("placeholder",'');
+    $(".search-input").attr("placeholder", '');
 })
 $(".search-input").blur(function () {
-    $(".search-input").attr("placeholder",'search');
+    $(".search-input").attr("placeholder", 'search');
     $(".search-input").val('')
+})
+
+
+$(document).on("click", ".link-item", function (e) {
+    console.log("click link item")
+    console.log($(this).attr("data-link"))
+    window.open($(this).attr("data-link"))
 })
 
 function togglePopMenu() {
 
 
 }
+
+function initNavigation() {
+    const key = 'hrefLst'
+    var data = [];
+    if (window.localStorage) {
+        data = JSON.parse(localStorage.getItem(key));
+    } else {
+
+    }
+    if (data.length == 0){
+        console.log(data.length)
+        data = [
+            {
+                "src": "https://www.bilibili.com",
+                "img": "https://www.bilibili.com/favicon.ico",
+                "desc": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili"
+            },
+            {
+                "src": "https://www.zhihu.com",
+                "img": "https://www.zhihu.com/favicon.ico",
+                "desc": "首页 - 知乎"
+            }
+        ];
+    }
+
+    data.forEach(function (i, index) {
+        var div = '<div class="link-item" data-link="' + i.src + '">' +
+            '   <div class="item-icon">' +
+            '       <img width="24px" height="24px" src="' + i.img + '" alt="">' +
+            '   </div>' +
+            '   <div class="item-desc">' +
+            '       <p>' + i.desc + '</p>' +
+            '   </div>' +
+            '</div>'
+        console.log(div)
+        $(".function-navigation").append(div);
+    })
+}
+
