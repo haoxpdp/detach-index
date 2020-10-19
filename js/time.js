@@ -60,8 +60,10 @@ $("body").click(function (e) {
             toggleSearch(false)
         }
     } else {
-        if (clickInner) {
-            toggleSearch(true);
+        if (!searchModel) {
+            if (clickInner) {
+                toggleSearch(true);
+            }
         }
     }
 })
@@ -84,6 +86,7 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
         (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1));
     console.log(delta)
     if (delta == -1) {
+        $(".search-input").focus();
         toggleSearch(true);
     }
     if (delta == 1) {
@@ -212,7 +215,7 @@ function toggleSearch(focus) {
         $(".search-icon").show();
         $(".bg").css("filter", "blur(100px)")
         $("#clock").css("top", "10%");
-        $(".search-wrapper").css("top", "25%");
+        $(".search-wrapper").css("top", "28%");
         $(".input-holder").css({"background": "rgba(0,0,0,0.5)", "height": "40px"})
         $(".search-input").css({"padding-left": "10px", "top": "5px"})
 
@@ -222,8 +225,8 @@ function toggleSearch(focus) {
         $(".search-icon").hide();
         $(".bg").css("filter", "blur(0px)")
         $("#clock").css("top", "18%");
-        $(".search-wrapper").css("top", "33%");
-        $(".input-holder").css({"background": "rgba(255,255,255,0.7)", "height": "50px"});
+        $(".search-wrapper").css("top", "40%");
+        $(".input-holder").css({"background": " rgba(0,0,0,0.3)", "height": "50px"});
         $(".search-input").css({"padding-left": "0px", "top": "9px"})
 
         $(".search-input").attr("placeholder", 'search');
