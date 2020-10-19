@@ -8,6 +8,8 @@ function initDate() {
 
 }
 
+let searchModel = false;
+
 initDate();
 
 $(document).ready(function () {
@@ -15,13 +17,7 @@ $(document).ready(function () {
         initDate();
     }, 2000);
     initNavigation();
-    $.ajax({
-        type: "get",
-        url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=%E5%AE%B6%E6%9C%89&json=1",
-        success: function (response) {
-            console.log(response)
-        }
-    });
+
 });
 
 $(".search-icon").click(function (e) {
@@ -38,7 +34,7 @@ $(document).keydown(function (e) {
 
         window.location.href = url;
         e.preventDefault();
-    } else if (e.altKey && (e.keyCode - 48 )< 7) {
+    } else if (e.altKey && (e.keyCode - 48) < 7) {
         var i = e.keyCode - 49;
         console.log($($(".link-item")[i]).trigger('click'))
     }
@@ -53,6 +49,20 @@ $("body").click(function (e) {
     } else {
         $("#setting-container").fadeOut(100)
         showSettings = false;
+    }
+//    search模式
+    let searchContainer = document.getElementsByClassName("search-wrapper")[0];
+    console.log(searchContainer)
+    var clickInner = searchContainer.contains(e.target);
+    console.log(searchModel, clickInner)
+    if (searchModel) {
+        if (!clickInner) {
+            toggleSearch(false)
+        }
+    } else {
+        if (clickInner) {
+            toggleSearch(true);
+        }
     }
 })
 
@@ -72,27 +82,27 @@ $(".setting").click(function () {
 $(document).on("mousewheel DOMMouseScroll", function (e) {
     var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) ||
         (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1));
-    if (delta == -1 && !$(".search-input").is(":focus")) {
-        $(".search-input").focus();
+    console.log(delta)
+    if (delta == -1) {
+        toggleSearch(true);
     }
-    if (delta == 1 && $(".search-input").is(":focus")) {
-        $(".search-input").blur()
+    if (delta == 1) {
+        toggleSearch(false);
     }
 });
 
 $(".search-input").focus(function () {
-    $(".search-input").attr("placeholder", '');
+    // toggleSearch(true);
 })
 $(".search-input").blur(function () {
-    $(".search-input").attr("placeholder", 'search');
-    $(".search-input").val('')
+
+    // toggleSearch(false);
 })
 
 
 $(document).on("click", ".link-item", function (e) {
-    console.log("click link item")
-    console.log($(this).attr("data-link"))
-    window.open($(this).attr("data-link"))
+
+    window.location.href = $(this).attr("data-link")
 })
 
 function togglePopMenu() {
@@ -108,7 +118,7 @@ function initNavigation() {
     } else {
 
     }
-    if (data ==null){
+    if (data == null) {
         data = [
             {
                 "src": "https://www.bilibili.com",
@@ -122,18 +132,18 @@ function initNavigation() {
             },
             {
                 "src": "https://github.com/",
-                "img":"https://github.com/favicon.ico",
-                "desc":"GitHub"
+                "img": "https://github.com/favicon.ico",
+                "desc": "GitHub"
             },
             {
-                "src":"https://bz.zzzmh.cn/",
-                "img":"https://bz.zzzmh.cn/favicon.ico",
-                "desc":"极简壁纸_海量电脑桌面壁纸美图_4K超高清_最潮壁纸网站"
+                "src": "https://bz.zzzmh.cn/",
+                "img": "https://bz.zzzmh.cn/favicon.ico",
+                "desc": "极简壁纸_海量电脑桌面壁纸美图_4K超高清_最潮壁纸网站"
             }
         ];
     }
-    if(data.length<7){
-        
+    if (data.length < 7) {
+
     }
 
     data.forEach(function (i, index) {
@@ -149,3 +159,78 @@ function initNavigation() {
     })
 }
 
+$(".search-input").on("input", function (e) {
+    $(".keywords").html("");
+
+    if ($(".search-input").val().length) {
+        var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + " </div>"
+        $(".keywords").append(translite);
+        $.ajax({
+            type: "get",
+            url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + $(".search-input").val() + "&json=1",
+            success: function (response) {
+                var r = response.replace("window.baidu.sug(", "");
+                r = r.substr(0, r.length - 2)
+                var sugArr = JSON.parse(r).s;
+                sugArr.forEach(function (v, i) {
+                    $(".keywords").append("<div class='search-link'>" + v + "</div>");
+                })
+            }
+        });
+        $(".keywords").fadeIn();
+
+    } else {
+        $(".keywords").fadeOut();
+    }
+
+})
+$(document).on("click", '.search-link', function (e) {
+    var text = $(this).text();
+    console.log(text.trim())
+    console.log(("翻译:" + $(".search-input").val()).trim())
+    if (text.trim() == ("翻译:" + $(".search-input").val())) {
+        var url = "https://fanyi.baidu.com/#en/zh/" + $(".search-input").val();
+        window.location.href = url;
+        toggleSearch(false);
+    } else {
+        var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
+        window.location.href = url;
+        toggleSearch(false);
+    }
+})
+
+function toggleSearch(focus) {
+    if (searchModel == focus) {
+        console.log("=======")
+        return;
+    }
+
+    if (focus) {
+        searchModel = true;
+        $(".search-input").attr("placeholder", '')
+        $(".function-tab-container").fadeOut();
+        $(".search-icon").show();
+        $(".bg").css("filter", "blur(100px)")
+        $("#clock").css("top", "10%");
+        $(".search-wrapper").css("top", "25%");
+        $(".input-holder").css({"background": "rgba(0,0,0,0.5)", "height": "40px"})
+        $(".search-input").css({"padding-left": "10px", "top": "5px"})
+
+    } else {
+        searchModel = false;
+        $(".function-tab-container").fadeIn(200);
+        $(".search-icon").hide();
+        $(".bg").css("filter", "blur(0px)")
+        $("#clock").css("top", "18%");
+        $(".search-wrapper").css("top", "33%");
+        $(".input-holder").css({"background": "rgba(255,255,255,0.7)", "height": "50px"});
+        $(".search-input").css({"padding-left": "0px", "top": "9px"})
+
+        $(".search-input").attr("placeholder", 'search');
+        $(".search-input").val('');
+        $(".keywords").html("");
+        $(".keywords").hide();
+
+    }
+    console.log("=====" + focus + "==" + searchModel);
+}
