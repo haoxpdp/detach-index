@@ -16,7 +16,9 @@
         "tabs",
         "notifications",
         "webRequest",
-        "storage"
+        "storage",
+        "http://*/*",
+        "https://*/*"
     ],
     "homepage_url": "https://www.baidu.com",
     "chrome_url_overrides": {

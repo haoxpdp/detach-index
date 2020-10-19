@@ -15,6 +15,13 @@ $(document).ready(function () {
         initDate();
     }, 2000);
     initNavigation();
+    $.ajax({
+        type: "get",
+        url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=%E5%AE%B6%E6%9C%89&json=1",
+        success: function (response) {
+            console.log(response)
+        }
+    });
 });
 
 $(".search-icon").click(function (e) {
