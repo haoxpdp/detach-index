@@ -31,8 +31,9 @@ $(document).keydown(function (e) {
 
         window.location.href = url;
         e.preventDefault();
-    } else if (e.altKey && e.keyCode == 49) {
-        console.log("alt+1")
+    } else if (e.altKey && (e.keyCode - 48 )< 7) {
+        var i = e.keyCode - 49;
+        console.log($($(".link-item")[i]).trigger('click'))
     }
 });
 
@@ -100,7 +101,7 @@ function initNavigation() {
     } else {
 
     }
-    if (data ==null ){
+    if (data ==null){
         data = [
             {
                 "src": "https://www.bilibili.com",
@@ -111,8 +112,16 @@ function initNavigation() {
                 "src": "https://www.zhihu.com",
                 "img": "https://www.zhihu.com/favicon.ico",
                 "desc": "首页 - 知乎"
+            },
+            {
+                "src": "https://github.com/",
+                "img":"https://github.com/favicon.ico",
+                "desc":"GitHub"
             }
         ];
+    }
+    if(data.length<7){
+        
     }
 
     data.forEach(function (i, index) {

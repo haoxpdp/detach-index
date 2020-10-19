@@ -280,6 +280,10 @@ input::-webkit-input-placeholder{
     display: block;
 }
 
+.item-desc{
+    text-align: center;
+}
+
 .item-desc p{
     color: white;
     width: 84px;
