@@ -117,6 +117,11 @@ function initNavigation() {
                 "src": "https://github.com/",
                 "img":"https://github.com/favicon.ico",
                 "desc":"GitHub"
+            },
+            {
+                "src":"https://bz.zzzmh.cn/",
+                "img":"https://bz.zzzmh.cn/favicon.ico",
+                "desc":"极简壁纸_海量电脑桌面壁纸美图_4K超高清_最潮壁纸网站"
             }
         ];
     }
