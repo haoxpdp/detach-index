@@ -100,8 +100,7 @@ function initNavigation() {
     } else {
 
     }
-    if (data.length == 0){
-        console.log(data.length)
+    if (data ==null ){
         data = [
             {
                 "src": "https://www.bilibili.com",
@@ -125,7 +124,6 @@ function initNavigation() {
             '       <p>' + i.desc + '</p>' +
             '   </div>' +
             '</div>'
-        console.log(div)
         $(".function-navigation").append(div);
     })
 }
