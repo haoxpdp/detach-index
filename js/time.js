@@ -1,4 +1,4 @@
-function initDate() {
+function initDate () {
     var initDate = new Date();
     var min = initDate.getMinutes();
     if (initDate.getMinutes().toString().length == 1) {
@@ -50,7 +50,7 @@ $("body").click(function (e) {
         $("#setting-container").fadeOut(100)
         showSettings = false;
     }
-//    search模式
+    //    search模式
     let searchContainer = document.getElementsByClassName("search-wrapper")[0];
     console.log(searchContainer)
     var clickInner = searchContainer.contains(e.target);
@@ -66,7 +66,14 @@ $("body").click(function (e) {
             }
         }
     }
-})
+
+    // add 窗口
+    let innerPlus = document.getElementsByClassName("item-plus")[0];
+    console.log(innerPlus)
+    if (!innerPlus.contains(e.target)) {
+        closeItemPlus();
+    }
+});
 
 var showSettings = false;
 
@@ -108,16 +115,16 @@ $(document).on("click", ".link-item", function (e) {
     window.location.href = $(this).attr("data-link")
 })
 
-function togglePopMenu() {
+function togglePopMenu () {
 
 
 }
+const tag_key = 'hrefLst'
 
-function initNavigation() {
-    const key = 'hrefLst'
+function initNavigation () {
     var data = [];
     if (window.localStorage) {
-        data = JSON.parse(localStorage.getItem(key));
+        data = JSON.parse(localStorage.getItem(tag_key));
     } else {
 
     }
@@ -150,16 +157,20 @@ function initNavigation() {
     }
 
     data.forEach(function (i, index) {
-        var div = '<div class="link-item" data-link="' + i.src + '">' +
-            '   <div class="item-icon">' +
-            '       <img width="24px" height="24px" src="' + i.img + '" alt="">' +
-            '   </div>' +
-            '   <div class="item-desc">' +
-            '       <p>' + i.desc + '</p>' +
-            '   </div>' +
-            '</div>'
-        $(".function-navigation").append(div);
+        appendTag(i);
     })
+}
+
+function appendTag (i) {
+    var div = '<div class="link-item" data-link="' + i.src + '">' +
+        '   <div class="item-icon">' +
+        '       <img width="24px" height="24px" src="' + i.img + '" alt="">' +
+        '   </div>' +
+        '   <div class="item-desc">' +
+        '       <p>' + i.desc + '</p>' +
+        '   </div>' +
+        '</div>'
+    $(".function-navigation").append(div);
 }
 
 $(".search-input").on("input", function (e) {
@@ -202,7 +213,7 @@ $(document).on("click", '.search-link', function (e) {
     }
 })
 
-function toggleSearch(focus) {
+function toggleSearch (focus) {
     if (searchModel == focus) {
         console.log("=======")
         return;
@@ -216,8 +227,8 @@ function toggleSearch(focus) {
         $(".bg").css("filter", "blur(100px)")
         $("#clock").css("top", "10%");
         $(".search-wrapper").css("top", "28%");
-        $(".input-holder").css({"background": "rgba(0,0,0,0.5)", "height": "40px"})
-        $(".search-input").css({"padding-left": "10px", "top": "5px"})
+        $(".input-holder").css({ "background": "rgba(0,0,0,0.5)", "height": "40px" })
+        $(".search-input").css({ "padding-left": "10px", "top": "5px" })
 
     } else {
         searchModel = false;
@@ -226,8 +237,8 @@ function toggleSearch(focus) {
         $(".bg").css("filter", "blur(0px)")
         $("#clock").css("top", "18%");
         $(".search-wrapper").css("top", "40%");
-        $(".input-holder").css({"background": " rgba(0,0,0,0.3)", "height": "50px"});
-        $(".search-input").css({"padding-left": "0px", "top": "9px"})
+        $(".input-holder").css({ "background": " rgba(0,0,0,0.3)", "height": "50px" });
+        $(".search-input").css({ "padding-left": "0px", "top": "9px" })
 
         $(".search-input").attr("placeholder", 'search');
         $(".search-input").val('');
@@ -235,5 +246,45 @@ function toggleSearch(focus) {
         $(".keywords").hide();
 
     }
-    console.log("=====" + focus + "==" + searchModel);
+}
+
+$(".plus-icon").click(function (e) {
+    $(".plus-container").fadeIn();
+});
+
+$(".close-plus-container").click(function (e) {
+    closeItemPlus()
+})
+
+$(".form-btn-cancel").click(function (e) {
+    e.preventDefault();
+})
+
+$(".form-btn-add").click(function (e) {
+    e.preventDefault();
+    var url = $(".form-url").val();
+    var name = $(".form-name").val();
+    var img = 'chrome-search://ntpicon/?size=48@1.000000x&url=https://' + name;
+    var tag = {
+        "src": url,
+        "img": img,
+        "desc": name
+    }
+    var data = JSON.parse(localStorage.getItem(tag_key));
+    if (data == null) {
+        data = [];
+    }
+    if (data.length < 7) {
+        data.push(tag);
+        appendTag(data);
+        localStorage.setItem(tag_key, JSON.stringify(tag));
+    }
+    console.log(data);
+
+});
+
+function closeItemPlus () {
+    $(".plus-container").fadeOut(300);
+    $(".form-url").val("");
+    $(".form-name").val("");
 }
