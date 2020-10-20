@@ -47,7 +47,9 @@ $(document).keydown(function (e) {
             e.preventDefault();
         }else if(e.altKey && (e.keyCode - 48) < 7){
             var i = e.keyCode - 49;
+            $($(".search-link")[i]).css({"padding-left": "40px","background-color": "rgba(100, 100, 100, 0.5)"});
             $($(".search-link")[i]).trigger("click");
+
         }
     }
 });
