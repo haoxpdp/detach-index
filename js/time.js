@@ -20,39 +20,7 @@ $(document).ready(function () {
 
 });
 
-$(".search-icon").click(function (e) {
-    e.preventDefault();
-    var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
-    window.open(url)
-});
 
-$(document).keydown(function (e) {
-
-    console.log(e.keyCode)
-    if (e.keyCode == 13 && $(".search-input").is(":focus")) {
-        var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
-
-        window.location.href = url;
-        e.preventDefault();
-    } else if (!searchModel && e.altKey && (e.keyCode - 48) < 7) {
-        var i = e.keyCode - 49;
-        $($(".link-item")[i]).trigger('click')
-    } else if(!searchModel && e.keyCode == 32){
-        toggleSearch(true);
-
-        e.preventDefault();
-    } else if(searchModel){
-        if(e.keyCode == 27){
-            toggleSearch(false);
-            e.preventDefault();
-        }else if(e.altKey && (e.keyCode - 48) < 7){
-            var i = e.keyCode - 49;
-            $($(".search-link")[i]).css({"padding-left": "40px","background-color": "rgba(100, 100, 100, 0.5)"});
-            $($(".search-link")[i]).trigger("click");
-
-        }
-    }
-});
 
 
 $("body").click(function (e) {
@@ -111,25 +79,25 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
 });
 
 $(document).on("click", ".link-item", function (e) {
-    
-    if(e.target.contains($(this).find("svg")[0])){
+
+    if (e.target.contains($(this).find("svg")[0])) {
         var dataStr = localStorage.getItem(tag_key);
-        if(dataStr){
+        if (dataStr) {
             var dataIndex = $(".link-item").index($(this));
-            
+
             var data = JSON.parse(dataStr);
-            data.splice(dataIndex,1)
+            data.splice(dataIndex, 1)
             console.log(data[1])
             // localStorage.setItem(tag_key,JSON.stringify(data))
-            if(data.length==0){
+            if (data.length == 0) {
                 localStorage.removeItem(tag_key);
             }
             $(this).fadeOut(200);
         }
-    }else{
+    } else {
         window.location.href = $(this).attr("data-link")
     }
-    
+
 })
 
 function togglePopMenu () {
@@ -140,6 +108,7 @@ const tag_key = 'hrefLst'
 
 function initNavigation () {
     var data = [];
+
     if (window.localStorage) {
         data = JSON.parse(localStorage.getItem(tag_key));
     } else {
@@ -169,17 +138,17 @@ function initNavigation () {
             }
         ];
     }
-    $.each(data, function (indexInArray, valueOfElement) { 
-         appendTag(valueOfElement)
+    $.each(data, function (indexInArray, valueOfElement) {
+        appendTag(valueOfElement)
     });
 
 }
 
 function appendTag (i) {
     var div = '<div class="link-item" data-link="' + i.src + '">' +
-        '   <div class="delete-link-item">'+
-        '       <svg style="fill: black; padding:4px" viewBox="0 0 16 16" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg"><path d="M14.1016 1.60156L8.20312 7.5L14.1016 13.3984L13.3984 14.1016L7.5 8.20312L1.60156 14.1016L0.898438 13.3984L6.79688 7.5L0.898438 1.60156L1.60156 0.898438L7.5 6.79688L13.3984 0.898438L14.1016 1.60156Z"></path></svg>'+
-        '   </div>'+
+        '   <div class="delete-link-item">' +
+        '       <svg style="fill: black; padding:4px" viewBox="0 0 16 16" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg"><path d="M14.1016 1.60156L8.20312 7.5L14.1016 13.3984L13.3984 14.1016L7.5 8.20312L1.60156 14.1016L0.898438 13.3984L6.79688 7.5L0.898438 1.60156L1.60156 0.898438L7.5 6.79688L13.3984 0.898438L14.1016 1.60156Z"></path></svg>' +
+        '   </div>' +
         '   <div class="item-icon">' +
         '       <img width="24px" height="24px" src="' + i.img + '" alt="">' +
         '   </div>' +
@@ -190,58 +159,7 @@ function appendTag (i) {
     $(".function-navigation").append(div);
 }
 
-$(".search-input").on("input", function (e) {
-    $(".keywords").html("");
-    var searchIndex = 1;
-    if ($(".search-input").val().length) {
-        var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + "<span>alt+1</span> </div>"
-        // $(".keywords").append(translite);
-        $.ajax({
-            type: "get",
-            url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + $(".search-input").val() + "&json=1",
-            success: function (response) {
-                var r = response.replace("window.baidu.sug(", "");
-                r = r.substr(0, r.length - 2)
-                var sugArr = JSON.parse(r).s;
-                $(".keywords").html("");
-                $(".keywords").append(translite)
-                sugArr.forEach(function (v, i) {
-                    searchIndex++;
-                    if(searchIndex<=9){
-                        $(".keywords").append("<div class='search-link'>" + v + "<span>alt+"+searchIndex+"</span> </div>");
-                    }
-                })
-            }
-        });
-        $(".keywords").fadeIn();
 
-    } else {
-        $(".keywords").fadeOut();
-    }
-
-})
-$(document).on("click", '.search-link', function (e) {
-    var text = $(this).text();
-    
-    if (text.trim() == ("翻译:" + $(".search-input").val()+"alt+1")) {
-        var url = "https://fanyi.baidu.com/#en/zh/" + $(".search-input").val();
-        window.location.href = url;
-        toggleSearch(false);
-    } else {
-        
-        var searchV='';
-        var order = $(".search-link").index($(this))+1;
-        if(order <= 9){
-            var replaceStr = "alt+"+order;
-            searchV = $(this).text().replace(replaceStr,"")
-        }else{
-            serachV = $(this).text();
-        }
-        var url = "https://www.baidu.com/s?ie=utf-8&word=" +searchV;
-        window.location.href = url;
-        // toggleSearch(false);
-    }
-})
 
 function toggleSearch (focus) {
     if (searchModel == focus) {
@@ -259,9 +177,9 @@ function toggleSearch (focus) {
         $(".search-wrapper").css("top", "28%");
         $(".input-holder").css({ "background": "rgba(0,0,0,0.5)", "height": "40px" })
         $(".search-input").css({ "padding-left": "10px", "top": "5px" })
-        $(".search-input").attr("disabled",false)
+        $(".search-input").attr("disabled", false)
         $(".search-input").focus()
-        $(".search-radius").addClass("search-mode")
+        $(".search-radius").removeClass("focus-mode")
 
 
     } else {
@@ -278,7 +196,9 @@ function toggleSearch (focus) {
         $(".search-input").val('');
         $(".keywords").html("");
         $(".keywords").hide();
-        $(".search-input").attr("disabled",true)
+        $(".search-input").attr("disabled", true)
+        $(".search-radius").addClass("focus-mode")
+
     }
 }
 
@@ -324,6 +244,6 @@ function closeItemPlus () {
 }
 
 
-$(".search-radius button").click(function(e){
+$(".search-radius button").click(function (e) {
     e.preventDefault();
 })
