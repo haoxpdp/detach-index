@@ -110,18 +110,26 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
     }
 });
 
-$(".search-input").focus(function () {
-    // toggleSearch(true);
-})
-$(".search-input").blur(function () {
-
-    // toggleSearch(false);
-})
-
-
 $(document).on("click", ".link-item", function (e) {
-
-    window.location.href = $(this).attr("data-link")
+    
+    if(e.target.contains($(this).find("svg")[0])){
+        var dataStr = localStorage.getItem(tag_key);
+        if(dataStr){
+            var dataIndex = $(".link-item").index($(this));
+            
+            var data = JSON.parse(dataStr);
+            data.splice(dataIndex,1)
+            console.log(data[1])
+            // localStorage.setItem(tag_key,JSON.stringify(data))
+            if(data.length==0){
+                localStorage.removeItem(tag_key);
+            }
+            $(this).fadeOut(200);
+        }
+    }else{
+        window.location.href = $(this).attr("data-link")
+    }
+    
 })
 
 function togglePopMenu () {
@@ -161,10 +169,6 @@ function initNavigation () {
             }
         ];
     }
-    if (data.length < 7) {
-
-    }
-    
     $.each(data, function (indexInArray, valueOfElement) { 
          appendTag(valueOfElement)
     });
@@ -288,6 +292,7 @@ $(".close-plus-container").click(function (e) {
 
 $(".form-btn-cancel").click(function (e) {
     e.preventDefault();
+    $(".plus-container").fadeOut(300);
 })
 
 $(".form-btn-add").click(function (e) {
@@ -309,7 +314,7 @@ $(".form-btn-add").click(function (e) {
         appendTag(tag);
         localStorage.setItem(tag_key, JSON.stringify(data));
     }
-
+    $(".plus-container").fadeOut(300);
 });
 
 function closeItemPlus () {

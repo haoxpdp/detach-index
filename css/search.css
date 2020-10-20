@@ -353,6 +353,7 @@ input::-webkit-input-placeholder {
     box-shadow: 0px 25.6px 57.6px rgba(0, 0, 0, 0.13), 0px 0px 16.4px rgba(0, 0, 0, 0.11);
     /*display: flex;*/
     display: none;
+    z-index: 9;
 }
 
 .close-plus-container {
@@ -371,6 +372,7 @@ input::-webkit-input-placeholder {
     overflow: hidden;
     display: none;
     transition: all 0.2s ease-in-out;
+    z-index: 10;
 }
 
 .link-item:hover .delete-link-item{
