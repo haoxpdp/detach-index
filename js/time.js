@@ -161,46 +161,7 @@ function appendTag (i) {
 
 
 
-function toggleSearch (focus) {
-    if (searchModel == focus) {
-        console.log("=======")
-        return;
-    }
 
-    if (focus) {
-        searchModel = true;
-        $(".search-input").attr("placeholder", '')
-        $(".function-tab-container").fadeOut();
-        $(".search-icon").show();
-        $(".bg").css("filter", "blur(100px)")
-        $("#clock").css("top", "10%");
-        $(".search-wrapper").css("top", "28%");
-        $(".input-holder").css({ "background": "rgba(0,0,0,0.5)", "height": "40px" })
-        $(".search-input").css({ "padding-left": "10px", "top": "5px" })
-        $(".search-input").attr("disabled", false)
-        $(".search-input").focus()
-        $(".search-radius").removeClass("focus-mode")
-
-
-    } else {
-        searchModel = false;
-        $(".function-tab-container").fadeIn(200);
-        $(".search-icon").hide();
-        $(".bg").css("filter", "blur(0px)")
-        $("#clock").css("top", "18%");
-        $(".search-wrapper").css("top", "40%");
-        $(".input-holder").css({ "background": " rgba(0,0,0,0.3)", "height": "50px" });
-        $(".search-input").css({ "padding-left": "0px", "top": "9px" })
-
-        $(".search-input").attr("placeholder", 'search');
-        $(".search-input").val('');
-        $(".keywords").html("");
-        $(".keywords").hide();
-        $(".search-input").attr("disabled", true)
-        $(".search-radius").addClass("focus-mode")
-
-    }
-}
 
 $(".plus-icon").click(function (e) {
     $(".plus-container").fadeIn();

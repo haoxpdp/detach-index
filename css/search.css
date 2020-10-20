@@ -406,12 +406,13 @@ input::-webkit-input-placeholder {
     z-index: 9;
 }
 
-.close-plus-container {
+.close-plus-container,.close-setting-container {
     float: right;
     padding-top: 10px;
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 6px;
+    cursor: pointer;
 }
 
 .delete-link-item{
@@ -432,7 +433,7 @@ input::-webkit-input-placeholder {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
-.close-plus-container:hover {
+.close-plus-container:hover,.close-setting-container:hover {
     background-color: rgba(150, 150, 150, 0.8);
 }
 
@@ -444,18 +445,18 @@ input::-webkit-input-placeholder {
     width: 100%;
 }
 
-.form-item label{
+label{
     display: block;
     box-sizing: border-box;
     font-weight: 600;
     line-height: 32px !important;
     margin-top: auto;
     margin-bottom: auto;
-    width: 40px;
+    width: 80px;
     text-align: left;
 }
 
-.form-item input{
+.form-item input,#setting-container input{
     width: 288px;
     padding: 6px 12px;
     font-family: inherit;
