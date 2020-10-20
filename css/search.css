@@ -99,10 +99,9 @@ input::-webkit-input-placeholder {
     margin-top: 50px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
-
+    min-height: 31px;
     border-radius: 10px;
     width: 300px;
-    min-height: 40px;
     position: absolute;
     /*width: auto;*/
 }
@@ -118,11 +117,21 @@ input::-webkit-input-placeholder {
     padding-bottom: 5px;
 }
 
-.keywords div:hover {
+.keywords .search-link:hover {
     padding-left: 40px;
     background-color: rgba(100, 100, 100, 0.5);
 
 }
+.search-link:first-child{
+    padding-top:10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.search-link:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
 
 .search-link span{
     float: right;
@@ -352,6 +361,23 @@ input::-webkit-input-placeholder {
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 6px;
+}
+
+.delete-link-item{
+    float:right;
+    height: 20px;
+    width: 20px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+    display: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.link-item:hover .delete-link-item{
+    display: block;
+}
+.delete-link-item :hover{
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .close-plus-container:hover {

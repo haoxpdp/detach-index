@@ -171,6 +171,9 @@ function initNavigation () {
 
 function appendTag (i) {
     var div = '<div class="link-item" data-link="' + i.src + '">' +
+        '   <div class="delete-link-item">'+
+        '       <svg style="fill: black; padding:4px" viewBox="0 0 16 16" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg"><path d="M14.1016 1.60156L8.20312 7.5L14.1016 13.3984L13.3984 14.1016L7.5 8.20312L1.60156 14.1016L0.898438 13.3984L6.79688 7.5L0.898438 1.60156L1.60156 0.898438L7.5 6.79688L13.3984 0.898438L14.1016 1.60156Z"></path></svg>'+
+        '   </div>'+
         '   <div class="item-icon">' +
         '       <img width="24px" height="24px" src="' + i.img + '" alt="">' +
         '   </div>' +
