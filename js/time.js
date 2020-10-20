@@ -57,16 +57,14 @@ $("body").click(function (e) {
     let settingContainer = document.getElementById("setting-container")
     let settings = document.getElementsByClassName("setting");
     if (settingContainer.contains(e.target) || settings[0].contains(e.target)) {
-        console.log("inner")
+
     } else {
         $("#setting-container").fadeOut(100)
         showSettings = false;
     }
     //    search模式
     let searchContainer = document.getElementsByClassName("search-wrapper")[0];
-    console.log(searchContainer)
     var clickInner = searchContainer.contains(e.target);
-    console.log(searchModel, clickInner)
     if (searchModel) {
         if (!clickInner) {
             toggleSearch(false)
@@ -81,7 +79,6 @@ $("body").click(function (e) {
 
     // add 窗口
     let innerPlus = document.getElementsByClassName("item-plus")[0];
-    console.log(innerPlus)
     if (!innerPlus.contains(e.target)) {
         closeItemPlus();
     }
@@ -103,7 +100,6 @@ $(".setting").click(function () {
 $(document).on("mousewheel DOMMouseScroll", function (e) {
     var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) ||
         (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1));
-    console.log(delta)
     if (delta == -1) {
         toggleSearch(true);
     }
@@ -136,7 +132,6 @@ function initNavigation () {
     var data = [];
     if (window.localStorage) {
         data = JSON.parse(localStorage.getItem(tag_key));
-        console.log(data)
     } else {
 
     }
@@ -188,10 +183,10 @@ function appendTag (i) {
 
 $(".search-input").on("input", function (e) {
     $(".keywords").html("");
-
+    var searchIndex = 1;
     if ($(".search-input").val().length) {
-        var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + " </div>"
-        $(".keywords").append(translite);
+        var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + "<span>alt+1</span> </div>"
+        // $(".keywords").append(translite);
         $.ajax({
             type: "get",
             url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + $(".search-input").val() + "&json=1",
@@ -199,8 +194,13 @@ $(".search-input").on("input", function (e) {
                 var r = response.replace("window.baidu.sug(", "");
                 r = r.substr(0, r.length - 2)
                 var sugArr = JSON.parse(r).s;
+                $(".keywords").html("");
+                $(".keywords").append(translite)
                 sugArr.forEach(function (v, i) {
-                    $(".keywords").append("<div class='search-link'>" + v + "</div>");
+                    searchIndex++;
+                    if(searchIndex<=9){
+                        $(".keywords").append("<div class='search-link'>" + v + "<span>alt+"+searchIndex+"</span> </div>");
+                    }
                 })
             }
         });
@@ -213,16 +213,23 @@ $(".search-input").on("input", function (e) {
 })
 $(document).on("click", '.search-link', function (e) {
     var text = $(this).text();
-    console.log(text.trim())
-    console.log(("翻译:" + $(".search-input").val()).trim())
     if (text.trim() == ("翻译:" + $(".search-input").val())) {
         var url = "https://fanyi.baidu.com/#en/zh/" + $(".search-input").val();
         window.location.href = url;
         toggleSearch(false);
     } else {
-        var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(this).text();
+        
+        var searchV='';
+        var order = $(".search-link").index($(this))+1;
+        if(order <= 9){
+            var replaceStr = "alt+"+order;
+            searchV = $(this).text().replace(replaceStr,"")
+        }else{
+            serachV = $(this).text();
+        }
+        var url = "https://www.baidu.com/s?ie=utf-8&word=" +searchV;
         window.location.href = url;
-        toggleSearch(false);
+        // toggleSearch(false);
     }
 })
 
@@ -296,7 +303,6 @@ $(".form-btn-add").click(function (e) {
         appendTag(tag);
         localStorage.setItem(tag_key, JSON.stringify(data));
     }
-    console.log(data);
 
 });
 

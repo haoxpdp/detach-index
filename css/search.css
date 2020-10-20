@@ -124,6 +124,10 @@ input::-webkit-input-placeholder {
 
 }
 
+.search-link span{
+    float: right;
+    font-size: x-small;
+}
 
 @media screen and (max-width: 560px) {
     .search-wrapper, .input-holder {
