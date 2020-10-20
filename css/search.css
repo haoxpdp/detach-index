@@ -96,7 +96,7 @@ input::-webkit-input-placeholder {
     display: none;
     transition: all 0.2s ease-in-out;
     opacity: 1;
-    margin-top: 50px;
+    margin-top: 20px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     min-height: 31px;
@@ -136,6 +136,59 @@ input::-webkit-input-placeholder {
 .search-link span{
     float: right;
     font-size: x-small;
+}
+
+.search-mode{
+    display: block;
+}
+.focus-mode{
+    display: none;
+}
+
+.search-radius {
+    
+    margin-top: 30px;
+    
+    display: flex;
+    align-items: center;
+    
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.search-radius button{
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin-left: 15px;
+    margin-right: 15px;
+    align-content: center;
+    line-height: 1;
+    font-family: inherit;
+    cursor: pointer;
+    box-sizing: border-box;
+    max-width: 374px;
+    display: inline-flex;
+    justify-content: center;
+    overflow: hidden;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.1s ease-in-out;
+    font-size: 14px;
+    min-width: 32px;
+    border: 2px solid transparent;
+    border-radius: 2px;
+    width: 110px;
+    background: rgba(250, 250, 250, 0.3);
+}
+
+.search-radius button.active{
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.search-radius button:hover{
+    background: rgba(250, 250, 250, 0.3);
+
 }
 
 @media screen and (max-width: 560px) {

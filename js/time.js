@@ -261,6 +261,7 @@ function toggleSearch (focus) {
         $(".search-input").css({ "padding-left": "10px", "top": "5px" })
         $(".search-input").attr("disabled",false)
         $(".search-input").focus()
+        $(".search-radius").addClass("search-mode")
 
 
     } else {
@@ -278,7 +279,6 @@ function toggleSearch (focus) {
         $(".keywords").html("");
         $(".keywords").hide();
         $(".search-input").attr("disabled",true)
-
     }
 }
 
@@ -322,3 +322,8 @@ function closeItemPlus () {
     $(".form-url").val("");
     $(".form-name").val("");
 }
+
+
+$(".search-radius button").click(function(e){
+    e.preventDefault();
+})
