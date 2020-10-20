@@ -220,7 +220,7 @@ $(document).on("click", '.search-link', function (e) {
         window.location.href = url;
         toggleSearch(false);
     } else {
-        var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(".search-input").val();
+        var url = "https://www.baidu.com/s?ie=utf-8&word=" + $(this).text();
         window.location.href = url;
         toggleSearch(false);
     }
