@@ -21,3 +21,7 @@
 #setting-container label:first {
     margin-top: 20px;
 }
+.bg,#time,.link-item,label{
+    user-select: none;
+}
+

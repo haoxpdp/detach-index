@@ -78,27 +78,6 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
     }
 });
 
-$(document).on("click", ".link-item", function (e) {
-
-    if (e.target.contains($(this).find("svg")[0])) {
-        var dataStr = localStorage.getItem(tag_key);
-        if (dataStr) {
-            var dataIndex = $(".link-item").index($(this));
-
-            var data = JSON.parse(dataStr);
-            data.splice(dataIndex, 1)
-            console.log(data[1])
-            // localStorage.setItem(tag_key,JSON.stringify(data))
-            if (data.length == 0) {
-                localStorage.removeItem(tag_key);
-            }
-            $(this).fadeOut(200);
-        }
-    } else {
-        window.location.href = $(this).attr("data-link")
-    }
-
-})
 
 function togglePopMenu () {
 
