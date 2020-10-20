@@ -37,6 +37,13 @@ $(document).keydown(function (e) {
     } else if (e.altKey && (e.keyCode - 48) < 7) {
         var i = e.keyCode - 49;
         console.log($($(".link-item")[i]).trigger('click'))
+    } else if(!searchModel && e.keyCode == 32){
+        toggleSearch(true);
+
+        e.preventDefault();
+    } else if(searchModel && e.keyCode == 27){
+        toggleSearch(false);
+        e.preventDefault();
     }
 });
 
@@ -93,7 +100,6 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
         (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1));
     console.log(delta)
     if (delta == -1) {
-        $(".search-input").focus();
         toggleSearch(true);
     }
     if (delta == 1) {
@@ -125,6 +131,7 @@ function initNavigation () {
     var data = [];
     if (window.localStorage) {
         data = JSON.parse(localStorage.getItem(tag_key));
+        console.log(data)
     } else {
 
     }
@@ -155,10 +162,11 @@ function initNavigation () {
     if (data.length < 7) {
 
     }
+    
+    $.each(data, function (indexInArray, valueOfElement) { 
+         appendTag(valueOfElement)
+    });
 
-    data.forEach(function (i, index) {
-        appendTag(i);
-    })
 }
 
 function appendTag (i) {
@@ -229,6 +237,9 @@ function toggleSearch (focus) {
         $(".search-wrapper").css("top", "28%");
         $(".input-holder").css({ "background": "rgba(0,0,0,0.5)", "height": "40px" })
         $(".search-input").css({ "padding-left": "10px", "top": "5px" })
+        $(".search-input").attr("disabled",false)
+        $(".search-input").focus()
+
 
     } else {
         searchModel = false;
@@ -244,6 +255,7 @@ function toggleSearch (focus) {
         $(".search-input").val('');
         $(".keywords").html("");
         $(".keywords").hide();
+        $(".search-input").attr("disabled",true)
 
     }
 }
@@ -264,7 +276,7 @@ $(".form-btn-add").click(function (e) {
     e.preventDefault();
     var url = $(".form-url").val();
     var name = $(".form-name").val();
-    var img = 'chrome-search://ntpicon/?size=48@1.000000x&url=https://' + name;
+    var img = 'chrome://favicon/size/48/' + url;
     var tag = {
         "src": url,
         "img": img,
@@ -276,8 +288,8 @@ $(".form-btn-add").click(function (e) {
     }
     if (data.length < 7) {
         data.push(tag);
-        appendTag(data);
-        localStorage.setItem(tag_key, JSON.stringify(tag));
+        appendTag(tag);
+        localStorage.setItem(tag_key, JSON.stringify(data));
     }
     console.log(data);
 

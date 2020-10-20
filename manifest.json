@@ -18,7 +18,8 @@
         "webRequest",
         "storage",
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "chrome://favicon/"
     ],
     "homepage_url": "https://www.baidu.com",
     "chrome_url_overrides": {
