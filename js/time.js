@@ -34,16 +34,21 @@ $(document).keydown(function (e) {
 
         window.location.href = url;
         e.preventDefault();
-    } else if (e.altKey && (e.keyCode - 48) < 7) {
+    } else if (!searchModel && e.altKey && (e.keyCode - 48) < 7) {
         var i = e.keyCode - 49;
-        console.log($($(".link-item")[i]).trigger('click'))
+        $($(".link-item")[i]).trigger('click')
     } else if(!searchModel && e.keyCode == 32){
         toggleSearch(true);
 
         e.preventDefault();
-    } else if(searchModel && e.keyCode == 27){
-        toggleSearch(false);
-        e.preventDefault();
+    } else if(searchModel){
+        if(e.keyCode == 27){
+            toggleSearch(false);
+            e.preventDefault();
+        }else if(e.altKey && (e.keyCode - 48) < 7){
+            var i = e.keyCode - 49;
+            $($(".search-link")[i]).trigger("click");
+        }
     }
 });
 
