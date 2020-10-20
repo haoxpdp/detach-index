@@ -213,7 +213,8 @@ $(".search-input").on("input", function (e) {
 })
 $(document).on("click", '.search-link', function (e) {
     var text = $(this).text();
-    if (text.trim() == ("翻译:" + $(".search-input").val())) {
+    
+    if (text.trim() == ("翻译:" + $(".search-input").val()+"alt+1")) {
         var url = "https://fanyi.baidu.com/#en/zh/" + $(".search-input").val();
         window.location.href = url;
         toggleSearch(false);
