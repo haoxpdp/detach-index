@@ -276,12 +276,6 @@ input::-webkit-input-placeholder {
     top: 10px;
 }
 
-.setting:hover {
-    /* animation: spin 0.5s infinite ease-in-out;
-    animation-iteration-count: 1; */
-
-}
-
 .setting:hover::after, .setting:hover::before {
     background: rgba(255, 255, 255, 0.8);
     content: '';
@@ -505,4 +499,8 @@ label{
 }
 .focus-mode{
     display: none;
+}
+
+button{
+    outline: none;
 }
