@@ -1,6 +1,6 @@
-function initDate () {
-    var initDate = new Date();
-    var min = initDate.getMinutes();
+function initDate() {
+    let initDate = new Date();
+    let min = initDate.getMinutes();
     if (initDate.getMinutes().toString().length == 1) {
         min = "0" + min;
     }
@@ -19,8 +19,6 @@ $(document).ready(function () {
     initNavigation();
 
 });
-
-
 
 
 $("body").click(function (e) {
@@ -78,52 +76,41 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
     }
 });
 
+function initNavigation() {
+    chrome.storage.sync.get("quickLink",function (data) {
+        console.log("chrome storage ")
+        if ($.isEmptyObject(data)){
+            data = [
+                {
+                    "src": "https://www.bilibili.com",
+                    "img": "https://www.bilibili.com/favicon.ico",
+                    "desc": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili"
+                },
+                {
+                    "src": "https://www.zhihu.com",
+                    "img": "https://www.zhihu.com/favicon.ico",
+                    "desc": "首页 - 知乎"
+                },
+                {
+                    "src": "https://github.com/",
+                    "img": "https://github.com/favicon.ico",
+                    "desc": "GitHub"
+                },
+                {
+                    "src": "https://bz.zzzmh.cn/",
+                    "img": "https://bz.zzzmh.cn/favicon.ico",
+                    "desc": "极简壁纸_海量电脑桌面壁纸美图_4K超高清_最潮壁纸网站"
+                }
+            ];
+        }
 
-function togglePopMenu () {
-
-
-}
-const tag_key = 'hrefLst'
-
-function initNavigation () {
-    var data = [];
-
-    if (window.localStorage) {
-        data = JSON.parse(localStorage.getItem(tag_key));
-    } else {
-
-    }
-    if (data == null) {
-        data = [
-            {
-                "src": "https://www.bilibili.com",
-                "img": "https://www.bilibili.com/favicon.ico",
-                "desc": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili"
-            },
-            {
-                "src": "https://www.zhihu.com",
-                "img": "https://www.zhihu.com/favicon.ico",
-                "desc": "首页 - 知乎"
-            },
-            {
-                "src": "https://github.com/",
-                "img": "https://github.com/favicon.ico",
-                "desc": "GitHub"
-            },
-            {
-                "src": "https://bz.zzzmh.cn/",
-                "img": "https://bz.zzzmh.cn/favicon.ico",
-                "desc": "极简壁纸_海量电脑桌面壁纸美图_4K超高清_最潮壁纸网站"
-            }
-        ];
-    }
-    $.each(data, function (indexInArray, valueOfElement) {
-        appendTag(valueOfElement)
-    });
-
+        $.each(data.quickLink, function (indexInArray, valueOfElement) {
+            appendTag(valueOfElement)
+        });
+    })
 }
 
-function appendTag (i) {
+function appendTag(i) {
     var div = '<div class="link-item" data-link="' + i.src + '">' +
         '   <div class="delete-link-item">' +
         '       <svg style="fill: black; padding:4px" viewBox="0 0 16 16" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg"><path d="M14.1016 1.60156L8.20312 7.5L14.1016 13.3984L13.3984 14.1016L7.5 8.20312L1.60156 14.1016L0.898438 13.3984L6.79688 7.5L0.898438 1.60156L1.60156 0.898438L7.5 6.79688L13.3984 0.898438L14.1016 1.60156Z"></path></svg>' +
@@ -137,9 +124,6 @@ function appendTag (i) {
         '</div>'
     $(".function-navigation").append(div);
 }
-
-
-
 
 
 $(".plus-icon").click(function (e) {
@@ -157,27 +141,36 @@ $(".form-btn-cancel").click(function (e) {
 
 $(".form-btn-add").click(function (e) {
     e.preventDefault();
-    var url = $(".form-url").val();
-    var name = $(".form-name").val();
-    var img = 'chrome://favicon/size/48/' + url;
-    var tag = {
+    let url = $(".form-url").val();
+    let name = $(".form-name").val();
+    let img = 'chrome://favicon/size/48/' + url;
+    let tag = {
         "src": url,
         "img": img,
         "desc": name
     }
-    var data = JSON.parse(localStorage.getItem(tag_key));
-    if (data == null) {
-        data = [];
-    }
-    if (data.length < 7) {
-        data.push(tag);
-        appendTag(tag);
-        localStorage.setItem(tag_key, JSON.stringify(data));
-    }
-    $(".plus-container").fadeOut(300);
+    chrome.storage.sync.get("quickLink",function (data){
+        console.log("load quickLink")
+        console.log(data);
+        let list = [];
+        if ($.isEmptyObject(data)){
+            list.push(tag);
+            appendTag(tag);
+        }else{
+            list = data.quickLink;
+            if (list.length<7){
+                list.push(tag);
+                appendTag(tag);
+            }
+        }
+        console.log(list)
+        chrome.storage.sync.set({"quickLink":list});
+        $(".plus-container").fadeOut(300);
+    });
+
 });
 
-function closeItemPlus () {
+function closeItemPlus() {
     $(".plus-container").fadeOut(300);
     $(".form-url").val("");
     $(".form-name").val("");

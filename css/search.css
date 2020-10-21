@@ -37,7 +37,7 @@
     font-size: 16px;
 
     top: 10px;
-    left: 0px;
+    left: 0;
     background: transparent;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.7);
@@ -67,11 +67,10 @@ input::-webkit-input-placeholder {
 }
 
 .search-icon::after {
-    border: 0;
     width: 14px;
     height: 14px;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     border-radius: 16px;
     border: 4px solid rgba(255, 255, 255, 0.5);
     content: '';
@@ -122,36 +121,37 @@ input::-webkit-input-placeholder {
     background-color: rgba(100, 100, 100, 0.5);
 
 }
-.search-link:first-child{
-    padding-top:10px;
+
+.search-link:first-child {
+    padding-top: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.search-link:last-child{
+
+.search-link:last-child {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
 
-.search-link span{
+.search-link span {
     float: right;
     font-size: x-small;
 }
 
 
-
 .search-radius {
-    
+
     margin-top: 30px;
-    
+
     display: flex;
     align-items: center;
-    
+
     justify-content: center;
     transition: all 0.2s ease-in-out;
 }
 
-.search-radius button{
+.search-radius button {
     padding-top: 5px;
     padding-bottom: 5px;
 
@@ -174,16 +174,15 @@ input::-webkit-input-placeholder {
     border: 2px solid transparent;
     border-radius: 19px;
     width: 110px;
-    transition: all 0.s ease-in;
     background: rgba(0, 0, 0, 0.3);
 
 }
 
-.search-radius button.active{
+.search-radius button.active {
     background: rgba(250, 250, 250, 0.3);
 }
 
-.search-radius button:hover{
+.search-radius button:hover {
     background: rgba(250, 250, 250, 0.3);
 
 }
@@ -266,13 +265,13 @@ input::-webkit-input-placeholder {
     width: 5px;
     height: 25px;
     left: 10px;
-    top: 0px;
+    top: 0;
 }
 
 .setting::after {
     width: 25px;
     height: 5px;
-    left: 0px;
+    left: 0;
     top: 10px;
 }
 
@@ -394,13 +393,13 @@ input::-webkit-input-placeholder {
     bottom: 100px;
     background-color: white;
     border-radius: 4px;
-    box-shadow: 0px 25.6px 57.6px rgba(0, 0, 0, 0.13), 0px 0px 16.4px rgba(0, 0, 0, 0.11);
+    box-shadow: 0 25.6px 57.6px rgba(0, 0, 0, 0.13), 0 0 16.4px rgba(0, 0, 0, 0.11);
     /*display: flex;*/
     display: none;
     z-index: 9;
 }
 
-.close-plus-container,.close-setting-container {
+.close-plus-container, .close-setting-container {
     float: right;
     padding-top: 10px;
     padding-left: 5px;
@@ -409,8 +408,8 @@ input::-webkit-input-placeholder {
     cursor: pointer;
 }
 
-.delete-link-item{
-    float:right;
+.delete-link-item {
+    float: right;
     height: 20px;
     width: 20px;
     border-top-right-radius: 10px;
@@ -420,14 +419,15 @@ input::-webkit-input-placeholder {
     z-index: 10;
 }
 
-.link-item:hover .delete-link-item{
+.link-item:hover .delete-link-item {
     display: block;
 }
-.delete-link-item :hover{
+
+.delete-link-item :hover {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
-.close-plus-container:hover,.close-setting-container:hover {
+.close-plus-container:hover, .close-setting-container:hover {
     background-color: rgba(150, 150, 150, 0.8);
 }
 
@@ -435,11 +435,11 @@ input::-webkit-input-placeholder {
     fill: white;
 }
 
-.form-item{
+.form-item {
     width: 100%;
 }
 
-label{
+label {
     display: block;
     box-sizing: border-box;
     font-weight: 600;
@@ -450,7 +450,7 @@ label{
     text-align: left;
 }
 
-.form-item input,#setting-container input{
+.form-item input, #setting-container input {
     width: 288px;
     padding: 6px 12px;
     font-family: inherit;
@@ -463,7 +463,8 @@ label{
     background: #FFFFFF;
     border: 1px solid #BEBEBE;
 }
-.form-item button{
+
+.form-item button {
     align-content: center;
     line-height: 1;
     font-family: inherit;
@@ -486,7 +487,8 @@ label{
     margin-top: 25px;
 
 }
-.form-item .form-btn-add{
+
+.form-item .form-btn-add {
     color: #FFFFFF;
     fill: #FFFFFF;
     background: #0078D4;
@@ -494,13 +496,14 @@ label{
 
 }
 
-.search-mode{
+.search-mode {
     display: block;
 }
-.focus-mode{
+
+.focus-mode {
     display: none;
 }
 
-button{
+button {
     outline: none;
 }

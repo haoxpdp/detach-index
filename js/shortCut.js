@@ -59,20 +59,16 @@ $(document).keydown(function (e) {
 $(document).on("click", ".link-item", function (e) {
 
     if (e.target.contains($(this).find("svg")[0])) {
-        console.log("delete")
-        var dataStr = localStorage.getItem(tag_key);
-        if (dataStr) {
-            var dataIndex = $(".link-item").index($(this));
+        let dataIndex = $(".link-item").index($(this));
 
-            var data = JSON.parse(dataStr);
-            data.splice(dataIndex, 1)
-            console.log(data[1])
-            // localStorage.setItem(tag_key,JSON.stringify(data))
-            if (data.length == 0) {
-                localStorage.removeItem(tag_key);
+        let self = this;
+        chrome.storage.sync.get("quickLink",function(data){
+            if (!$.isEmptyObject(data)){
+                data.quickLink.splice(dataIndex,1);
+                $(self).fadeOut(200);
             }
-            $(this).fadeOut(200);
-        }
+            chrome.storage.sync.set({"quickLink":data.quickLink})
+        })
     } else {
         window.location.href = $(this).attr("data-link")
         e.preventDefault()
