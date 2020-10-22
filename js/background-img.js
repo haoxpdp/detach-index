@@ -1,21 +1,22 @@
-const atomization = "bg-atomization"
 const bgImgUrl = "bgImgUrl"
-var offset = localStorage.getItem(atomization) == null ? "0%" : localStorage.getItem(atomization) + "%";
-console.log(offset)
-ZUI.silder({
-    elem: '.bg-atomization',
-    color: 'gray',
-    pos: offset,
-    showNum: true,
-    count: 100,
-    disable: false,
-    callBackMove: function (num) {
-        $(".bg").css("filter", "blur(" + num + "px)")
-        updateLocalStorageAtomiztion(num);
+chrome.storage.sync.get("bgAtomization",function (data) {
+    var offset = $.isEmptyObject(data)?"0%":data.bgAtomization+"%";
 
-    },
-    callBackMouseup: function (num) {
-    }
+    ZUI.silder({
+        elem: '.bg-atomization',
+        color: 'gray',
+        pos: offset,
+        showNum: true,
+        count: 100,
+        disable: false,
+        callBackMove: function (num) {
+            $(".bg").css("filter", "blur(" + num + "px)")
+            updateStroageBgAtomiztion(num);
+
+        },
+        callBackMouseup: function (num) {
+        }
+    })
 })
 
 $(document).ready(function (e) {
@@ -23,42 +24,53 @@ $(document).ready(function (e) {
     loadBgImgUrl();
 })
 
-function updateLocalStorageAtomiztion (num) {
-    localStorage.setItem(atomization, num);
-    loadBgAtomiztion();
+function updateStroageBgAtomiztion (num) {
+    chrome.storage.sync.set({"bgAtomization":num},function (data) {
+        loadBgAtomiztion();
+    })
 }
 
 function loadBgAtomiztion () {
-    var ato = localStorage.getItem(atomization);
-    if (ato == null) {
-        ato == 0;
-        localStorage.setItem(atomization, ato);
-    }
-    $(".bg").css("filter", "blur(" + ato + "px)")
-
+    chrome.storage.sync.get("bgAtomization",function (data){
+        if ($.isEmptyObject(data)){
+            chrome.storage.sync.set({"bgAtomization":0},function (data) {
+                $(".bg").css("filter",'blur(0px)');
+            })
+        }else{
+            $(".bg").css("filter",'blur('+data.bgAtomization+"px)");
+        }
+    })
 }
 
 
 $("#bg-url-input").change(function (e) {
     e.preventDefault();
     console.log("changed")
-    localStorage.setItem(bgImgUrl, $(this).val());
-    loadBgImgUrl();
+    var url = $(this).val();
+    chrome.storage.sync.set({"bgImgUrl":url},function(data){
+        console.log(data)
+        loadBgImgUrl();
+    })
 });
 
 function loadBgImgUrl () {
-    var url = localStorage.getItem(bgImgUrl);
-    if (url == null) {
-        url = "https://w.wallhaven.cc/full/d5/wallhaven-d55rxl.jpg";
-        localStorage.setItem(bgImgUrl, url);
-    }
-    $(".bg").attr("src", url)
-    $("#bg-url-input").val(url);
+    chrome.storage.sync.get("bgImgUrl",function (data) {
+        var url;
+        if ($.isEmptyObject(data)){
+            url = "https://w.wallhaven.cc/full/lq/wallhaven-lq6rmy.png";
+            chrome.storage.sync.set({"bgImgUrl":url},function (d) {});
+        }else{
+            url = data.bgImgUrl;
+        }
+
+        $(".bg").attr("src", url)
+        $("#bg-url-input").val(url);
+    })
+
 }
 
 function toggleSearch (focus) {
     if (searchModel == focus) {
-        console.log("=======")
         return;
     }
 

@@ -1,42 +1,43 @@
-var searchWeb = ""
-const searchWebKey = "search_web_url"
+
 var translateUrl;
 var searchUrl;
-var keyWordsUrl;
-var activeWebId;
 
 $(document).ready(function () {
-    initLocalStorage();
+    initStorage();
     activeSearchRadius();
 
 });
 
-function initLocalStorage (params) {
-    searchWeb = localStorage.getItem(searchWebKey);
-    if (searchWeb == null) {
-        searchWeb = {
-            "id": "baidu",
-            "searchUrl": "https://www.baidu.com/s?ie=utf-8&word=",
-            "keyWordsUrl": "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?json=1&wd="
+function initStorage (params) {
+    chrome.storage.sync.get("searchEngine",function (data) {
+        console.log(data);
+        if ($.isEmptyObject(data)){
+            chrome.storage.sync.set({"searchEngine":{
+                    "id": "baidu",
+                    "searchUrl": "https://www.baidu.com/s?ie=utf-8&word=",
+                    "keyWordsUrl": "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?json=1&wd="
+                }},function(data){
+                console.log(data);
+            })
         }
-        localStorage.setItem(searchWebKey, JSON.stringify(searchWeb))
-    }
+    })
+
 }
 
 function activeSearchRadius () {
-    var activeWeb = JSON.parse(localStorage.getItem(searchWebKey));
-    $(".search-radius").find("button").removeClass("active");
-    $("#" + activeWeb.id).addClass("active")
-    translateUrl = activeWeb.translation;
-    searchUrl = activeWeb.searchUrl;
-    keyWordsUrl = activeWeb.keyWordsUrl;
-    activeWebId = activeWeb.id;
-    $(".search-input").trigger("input")
+    chrome.storage.sync.get("searchEngine",function (data){
+
+        $(".search-radius").find("button").removeClass("active");
+        $("#" + data.searchEngine.id).addClass("active")
+        $(".search-input").trigger("input")
+    })
+
 }
 
 function saveSearchWeb (params) {
-    localStorage.setItem(searchWebKey, JSON.stringify(params))
-    activeSearchRadius();
+    chrome.storage.sync.set({"searchEngine":params},function (data) {
+        activeSearchRadius();
+    })
 }
 
 $(".search-radius button").click(function (e) {
@@ -67,74 +68,85 @@ $(".search-radius button").click(function (e) {
 })
 
 $(".search-input").on("input", function (e) {
-    $(".keywords").html("");
-    var searchIndex = 1;
-    if ($(".search-input").val().length) {
-        var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + "<span>alt+1</span> </div>"
-        var url = keyWordsUrl + $(".search-input").val()
-        $.ajax({
-            type: "get",
-            url: url,
-            success: function (response) {
+    chrome.storage.sync.get("searchEngine",function (data) {
+        let id = data.searchEngine.id
+        let searchEngine = data.searchEngine;
+        $(".keywords").html("");
+        var searchIndex = 1;
+        if ($(".search-input").val().length) {
+            var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + "<span>alt+1</span> </div>"
+            var url = searchEngine.keyWordsUrl + $(".search-input").val()
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (response) {
 
-                $(".keywords").html("");
-                $(".keywords").append(translite)
-                var sugArr = [];
+                    $(".keywords").html("");
+                    $(".keywords").append(translite)
+                    let sugArr = [];
 
-                if (activeWebId == 'baidu') {
-                    sugArr = baiduKeywords(response);
-                } else if (activeWebId == 'google') {
-                    sugArr = googleKeywords(response);
-                } else if (activeWebId == 'bing') {
-                    sugArr = bingKeywords(response)
-                }
 
-                sugArr.forEach(function (v, i) {
-                    searchIndex++;
-                    if (searchIndex <= 9) {
-                        $(".keywords").append("<div class='search-link'>" + v + "<span>alt+" + searchIndex + "</span> </div>");
+                    if (id === 'baidu') {
+                        sugArr = baiduKeywords(response);
+                    } else if (id === 'google') {
+                        sugArr = googleKeywords(response);
+                    } else if (id === 'bing') {
+                        sugArr = bingKeywords(response)
                     }
-                })
-            }
-        });
-        $(".keywords").fadeIn();
 
-    } else {
-        $(".keywords").fadeOut();
-    }
+                    sugArr.forEach(function (v, i) {
+                        searchIndex++;
+                        if (searchIndex <= 9) {
+                            $(".keywords").append("<div class='search-link'>" + v + "<span>alt+" + searchIndex + "</span> </div>");
+                        }
+                    })
+
+                }
+            });
+            $(".keywords").fadeIn();
+
+        } else {
+            $(".keywords").fadeOut();
+        }
+    })
+
 
 })
 
 
 $(".search-icon").click(function (e) {
     e.preventDefault();
-    var url = searchUrl + $(".search-input").val();
-    window.location.href = url
+    chrome.storage.sync.get("searchEngine",function (data){
+        let url =data.searchEngine.searchUrl +$(".search-input").val();
+        window.location.href = url;
+    })
+
     // window.open(url)
 });
 
 
 $(document).on("click", '.search-link', function (e) {
     var text = $(this).text();
+    chrome.storage.sync.get("searchEngine",function(data){
+        console.log(data)
+        let searchEngine = data.searchEngine;
 
-    if (text.trim() == ("翻译:" + $(".search-input").val() + "alt+1")) {
-        var url = translateUrl + $(".search-input").val();
-        window.location.href = url;
-        toggleSearch(false);
-    } else {
-
-        var searchV = '';
-        var order = $(".search-link").index($(this)) + 1;
-        if (order <= 9) {
-            var replaceStr = "alt+" + order;
-            searchV = $(this).text().replace(replaceStr, "")
+        if (text.trim() == ("翻译:" + $(".search-input").val() + "alt+1")) {
+            var url = searchEngine.translation + $(".search-input").val();
+            window.location.href = url;
+            toggleSearch(false);
         } else {
-            serachV = $(this).text();
+
+            var order = $(".search-link").index($(this)) + 1;
+            var replaceStr = "alt+" + order;
+
+
+            console.log()
+            var url = searchEngine.searchUrl + text.replace(replaceStr, "");
+            window.location.href = url;
+            // toggleSearch(false);
         }
-        var url = searchUrl + searchV;
-        window.location.href = url;
-        // toggleSearch(false);
-    }
+    })
 })
 
 
