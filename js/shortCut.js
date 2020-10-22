@@ -1,4 +1,6 @@
+
 $(document).keydown(function (e) {
+    console.log("eeeee "+e.keyCode)
     if (e.keyCode == 13 && $(".search-input").is(":focus")) {
         $(".search-icon").trigger("click")
         e.preventDefault();
