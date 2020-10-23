@@ -109,8 +109,8 @@
                 </svg>
             </span>
             <label for="bg-atomization">背景雾化</label>
-            <div class="bg-atomization"></div>
-            <label for="bg-url">壁纸</label>
+            <div class="bg-atomization" id ='bg-atomization'></div>
+            <label for="bg-url" id = 'bg-url'>壁纸</label>
             <div>
                 <input id="bg-url-input" type="text">
             </div>
@@ -120,11 +120,12 @@
 
         <div class="container">
             <img class="bg twlink" src="https://w.wallhaven.cc/full/d5/wallhaven-d55rxl.jpg" alt="">
-            <div id="clock">
-                <h1 id="time" class="twlink">开始</h1>
-            </div>
 
             <form id="search-form">
+                <div id="clock">
+                    <h1 id="time" class="twlink">开始</h1>
+                </div>
+
                 <div class="search-wrapper">
                     <div class="input-holder twlink">
                         <input type="text" class="search-input" placeholder="search" disabled />
@@ -192,6 +193,8 @@
                 </div>
 
             </form>
+
+
         </div>
 
     </div>

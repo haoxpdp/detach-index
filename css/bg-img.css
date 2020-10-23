@@ -25,3 +25,36 @@
     user-select: none;
 }
 
+@media screen and (max-height: 600px) {
+    #clock{
+        /*display: none;*/
+    }
+}
+
+.search-input:focus #time{
+    display: none;
+}
+
+
+@media screen and (max-height: 800px) {
+
+    .container:focus-within #clock{
+        top: 10px !important;
+    }
+    #clock{
+        top:12%
+    }
+}
+
+@media screen and (max-height: 600px){
+    .container:focus-within #clock{
+        display: none !important;
+    }
+
+}
+
+@media screen and (max-height: 500px){
+    #clock{
+        display: none !important;
+    }
+}
