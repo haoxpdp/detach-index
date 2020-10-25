@@ -45,10 +45,8 @@ function loadBgAtomiztion () {
 
 $("#bg-url-input").change(function (e) {
     e.preventDefault();
-    console.log("changed")
     var url = $(this).val();
     chrome.storage.sync.set({"bgImgUrl":url},function(data){
-        console.log(data)
         loadBgImgUrl();
     })
 });

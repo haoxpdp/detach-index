@@ -136,7 +136,7 @@ input::-webkit-input-placeholder {
 }
 
 
-.search-link span {
+.search-link .quick {
     float: right;
     font-size: x-small;
 }

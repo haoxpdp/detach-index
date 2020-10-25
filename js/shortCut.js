@@ -4,7 +4,6 @@ $(document).keydown(function (e) {
         e.preventDefault();
     } else if (!searchModel && e.altKey && (e.keyCode - 48) < 7) {
         var i = e.keyCode - 49;
-        console.log("---------" + i)
         $($(".item-icon")[i]).trigger('click')
     } else if (!searchModel && e.keyCode == 32) {
         toggleSearch(true);
@@ -35,8 +34,6 @@ $(document).keydown(function (e) {
 
 
     if (searchModel) {
-        console.log("searchModel " + e.keyCode)
-        console.log(e.altKey)
         if (e.keyCode == 27) {
             toggleSearch(false);
             e.preventDefault();
