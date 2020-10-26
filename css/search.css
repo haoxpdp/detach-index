@@ -42,6 +42,9 @@
     cursor: pointer;
     color: rgba(255, 255, 255, 0.7);
 }
+.search-input:focus{
+    width: 380px;
+}
 
 .search-input::-ms-input-placeholder {
     text-align: center;
@@ -60,7 +63,6 @@ input::-webkit-input-placeholder {
     margin: 10px;
     position: relative;
     float: right;
-    top: -30px;
     display: none;
     transition: all 0.2s ease-in;
 
@@ -134,7 +136,7 @@ input::-webkit-input-placeholder {
 }
 
 
-.search-link span {
+.search-link .quick {
     float: right;
     font-size: x-small;
 }

@@ -78,7 +78,6 @@ $(document).on("mousewheel DOMMouseScroll", function (e) {
 
 function initNavigation() {
     chrome.storage.sync.get("quickLink",function (data) {
-        console.log("chrome storage ")
         if ($.isEmptyObject(data)){
             data = [
                 {
@@ -150,8 +149,6 @@ $(".form-btn-add").click(function (e) {
         "desc": name
     }
     chrome.storage.sync.get("quickLink",function (data){
-        console.log("load quickLink")
-        console.log(data);
         let list = [];
         if ($.isEmptyObject(data)){
             list.push(tag);
@@ -163,7 +160,6 @@ $(".form-btn-add").click(function (e) {
                 appendTag(tag);
             }
         }
-        console.log(list)
         chrome.storage.sync.set({"quickLink":list});
         $(".plus-container").fadeOut(300);
     });

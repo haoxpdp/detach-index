@@ -1,4 +1,3 @@
-
 var translateUrl;
 var searchUrl;
 
@@ -8,24 +7,24 @@ $(document).ready(function () {
 
 });
 
-function initStorage (params) {
-    chrome.storage.sync.get("searchEngine",function (data) {
-        console.log(data);
-        if ($.isEmptyObject(data)){
-            chrome.storage.sync.set({"searchEngine":{
+function initStorage(params) {
+    chrome.storage.sync.get("searchEngine", function (data) {
+        if ($.isEmptyObject(data)) {
+            chrome.storage.sync.set({
+                "searchEngine": {
                     "id": "baidu",
                     "searchUrl": "https://www.baidu.com/s?ie=utf-8&word=",
                     "keyWordsUrl": "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?json=1&wd="
-                }},function(data){
-                console.log(data);
+                }
+            }, function (data) {
             })
         }
     })
 
 }
 
-function activeSearchRadius () {
-    chrome.storage.sync.get("searchEngine",function (data){
+function activeSearchRadius() {
+    chrome.storage.sync.get("searchEngine", function (data) {
 
         $(".search-radius").find("button").removeClass("active");
         $("#" + data.searchEngine.id).addClass("active")
@@ -34,8 +33,8 @@ function activeSearchRadius () {
 
 }
 
-function saveSearchWeb (params) {
-    chrome.storage.sync.set({"searchEngine":params},function (data) {
+function saveSearchWeb(params) {
+    chrome.storage.sync.set({"searchEngine": params}, function (data) {
         activeSearchRadius();
     })
 }
@@ -68,14 +67,18 @@ $(".search-radius button").click(function (e) {
 })
 
 $(".search-input").on("input", function (e) {
-    chrome.storage.sync.get("searchEngine",function (data) {
+    chrome.storage.sync.get("searchEngine", function (data) {
         let id = data.searchEngine.id
         let searchEngine = data.searchEngine;
         $(".keywords").html("");
         var searchIndex = 1;
         if ($(".search-input").val().length) {
-            var translite = "<div class='search-link'>翻译:" + $(".search-input").val() + "<span>alt+1</span> </div>"
-            var url = searchEngine.keyWordsUrl + $(".search-input").val()
+            let translite = "<div class='search-link'><span class='search-value'>翻译:" + $(".search-input").val() + "</span><span class='quick'>alt+1</span> </div>";
+            if ($(".search-input").val().length > 30) {
+                translite = "<div class='search-link'><span class='search-value'>翻译:" + $(".search-input").val().substr(0, 40) +"...</span><span class='quick'>alt+1</span> </div>";
+            }
+
+            let url = searchEngine.keyWordsUrl + $(".search-input").val()
             $.ajax({
                 type: "get",
                 url: url,
@@ -97,7 +100,7 @@ $(".search-input").on("input", function (e) {
                     sugArr.forEach(function (v, i) {
                         searchIndex++;
                         if (searchIndex <= 9) {
-                            $(".keywords").append("<div class='search-link'>" + v + "<span>alt+" + searchIndex + "</span> </div>");
+                            $(".keywords").append("<div class='search-link'><span class='search-value'>" + v + "</span><span class='quick'>alt+" + searchIndex + "</span> </div>");
                         }
                     })
 
@@ -116,8 +119,8 @@ $(".search-input").on("input", function (e) {
 
 $(".search-icon").click(function (e) {
     e.preventDefault();
-    chrome.storage.sync.get("searchEngine",function (data){
-        let url =data.searchEngine.searchUrl +$(".search-input").val();
+    chrome.storage.sync.get("searchEngine", function (data) {
+        let url = data.searchEngine.searchUrl + $(".search-input").val();
         window.location.href = url;
     })
 
@@ -126,23 +129,18 @@ $(".search-icon").click(function (e) {
 
 
 $(document).on("click", '.search-link', function (e) {
-    var text = $(this).text();
-    chrome.storage.sync.get("searchEngine",function(data){
-        console.log(data)
+    let text = $(this).find(".search-value").text();
+    chrome.storage.sync.get("searchEngine", function (data) {
         let searchEngine = data.searchEngine;
-
-        if (text.trim() == ("翻译:" + $(".search-input").val() + "alt+1")) {
-            var url = searchEngine.translation + $(".search-input").val();
+        if (text.startsWith("翻译")) {
+            let url = searchEngine.translation + $(".search-input").val();
             window.location.href = url;
-            toggleSearch(false);
+            // toggleSearch(false);
         } else {
 
-            var order = $(".search-link").index($(this)) + 1;
-            var replaceStr = "alt+" + order;
-
-
-            console.log()
-            var url = searchEngine.searchUrl + text.replace(replaceStr, "");
+            let order = $(".search-link").index($(this)) + 1;
+            let replaceStr = "alt+" + order;
+            let url = searchEngine.searchUrl + text.replace(replaceStr, "");
             window.location.href = url;
             // toggleSearch(false);
         }
@@ -150,13 +148,13 @@ $(document).on("click", '.search-link', function (e) {
 })
 
 
-function baiduKeywords (response) {
+function baiduKeywords(response) {
     var r = response.replace("window.baidu.sug(", "");
     r = r.substr(0, r.length - 2)
     return JSON.parse(r).s;
 }
 
-function googleKeywords (response) {
+function googleKeywords(response) {
     var k = [];
     $.each(response.getElementsByTagName("suggestion"), function (indexInArray, valueOfElement) {
         k.push(valueOfElement.getAttribute("data"))
@@ -165,7 +163,7 @@ function googleKeywords (response) {
     return k;
 }
 
-function bingKeywords (response) {
+function bingKeywords(response) {
     var data = [];
     $.each(response.AS.Results[0].Suggests, function (indexInArray, valueOfElement) {
         data.push(valueOfElement.Txt)
@@ -173,7 +171,7 @@ function bingKeywords (response) {
     return data;
 }
 
-function toogleAcitveSearchWeb (left) {
+function toogleAcitveSearchWeb(left) {
     var index = $(".search-web").index($(".active"));
     if (left) {
         index = index - 1 < 0 ? 2 : index - 1;

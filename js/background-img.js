@@ -45,10 +45,8 @@ function loadBgAtomiztion () {
 
 $("#bg-url-input").change(function (e) {
     e.preventDefault();
-    console.log("changed")
     var url = $(this).val();
     chrome.storage.sync.set({"bgImgUrl":url},function(data){
-        console.log(data)
         loadBgImgUrl();
     })
 });
@@ -78,6 +76,7 @@ function toggleSearch (focus) {
         searchModel = true;
         $(".search-input").attr("placeholder", '')
         $(".function-tab-container").fadeOut();
+        $(".link-item").fadeOut()
         $(".search-icon").show();
         $(".bg").css("filter", "blur(100px)")
         $("#clock").css("top", "10%");
@@ -92,9 +91,11 @@ function toggleSearch (focus) {
     } else {
         searchModel = false;
         $(".function-tab-container").fadeIn(200);
+        $(".link-item").fadeIn(200)
         $(".search-icon").hide();
 
         $("#clock").css("top", "18%");
+
         $(".search-wrapper").css("top", "40%");
         $(".input-holder").css({ "background": " rgba(0,0,0,0.3)", "height": "50px" });
         $(".search-input").css({ "padding-left": "0px", "top": "9px" })
