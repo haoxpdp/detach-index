@@ -16,9 +16,10 @@
         "storage",
         "https://www.baidu.com/*",
         "https://www.baidu.com/*",
-        "https://google.com/*",
-        "https://cn.bing.com/*",
-        "chrome://favicon/"
+        "http://google.com/*",
+        "https://api.bing.com//*",
+        "chrome://favicon/",
+        "https://sp0.baidu.com/*"
     ],
     "homepage_url": "https://www.github.com/haoxpdp/detach-index",
     "chrome_url_overrides": {
