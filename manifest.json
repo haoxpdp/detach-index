@@ -13,15 +13,14 @@
         "default_title": "detach-index"
     },
     "permissions": [
-        "tabs",
-        "notifications",
-        "webRequest",
         "storage",
-        "http://*/*",
-        "https://*/*",
+        "https://www.baidu.com/*",
+        "https://www.baidu.com/*",
+        "https://google.com/*",
+        "https://cn.bing.com/*",
         "chrome://favicon/"
     ],
-    "homepage_url": "https://www.baidu.com",
+    "homepage_url": "https://www.github.com/haoxpdp/detach-index",
     "chrome_url_overrides": {
         "newtab": "newtab.html"
     }
