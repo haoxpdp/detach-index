@@ -58,16 +58,17 @@ $(document).keydown(function (e) {
 $(document).on("click", ".link-item", function (e) {
 
     if (e.target.contains($(this).find("svg")[0])) {
+        console.log("rm ")
         let dataIndex = $(".link-item").index($(this));
 
         let self = this;
-        chrome.storage.sync.get("quickLink",function(data){
-            if (!$.isEmptyObject(data)){
-                data.quickLink.splice(dataIndex,1);
-                $(self).fadeOut(200);
-            }
-            chrome.storage.sync.set({"quickLink":data.quickLink})
-        })
+        // chrome.storage.sync.get("quickLink",function(data){
+        //     if (!$.isEmptyObject(data)){
+        //         data.quickLink.splice(dataIndex,1);
+        //         $(self).fadeOut(200);
+        //     }
+        //     chrome.storage.sync.set({"quickLink":data.quickLink})
+        // })
     } else {
         window.location.href = $(this).attr("data-link")
         e.preventDefault()
