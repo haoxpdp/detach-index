@@ -78,7 +78,7 @@ function toggleSearch (focus) {
         $(".function-tab-container").fadeOut();
         $(".link-item").fadeOut()
         $(".search-icon").show();
-        $(".bg").css("filter", "blur(100px)")
+        // $(".bg").css("filter", "blur(100px)")
         $("#clock").css("top", "10%");
         $(".search-wrapper").css("top", "28%");
         $(".input-holder").css({ "background": "rgba(0,0,0,0.5)", "height": "40px" })

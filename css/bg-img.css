@@ -10,6 +10,9 @@
     display: none;
     z-index: 9;
 }
+#bg-blur{
+
+}
 
 .bg-atomization{
     position: relative;
