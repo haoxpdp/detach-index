@@ -1,6 +1,5 @@
-
 $(document).keydown(function (e) {
-    console.log("eeeee "+e.keyCode)
+    console.log("eeeee " + e.keyCode)
     if (e.keyCode == 13 && $(".search-input").is(":focus")) {
         $(".search-icon").trigger("click")
         e.preventDefault();
@@ -34,14 +33,13 @@ $(document).keydown(function (e) {
     }
 
 
-
     if (searchModel) {
         if (e.keyCode == 27) {
             toggleSearch(false);
             e.preventDefault();
         } else if (e.altKey && (e.keyCode - 48) < 7 && (e.keyCode - 48) >= 0) {
             var i = e.keyCode - 49;
-            $($(".search-link")[i]).css({ "padding-left": "40px", "background-color": "rgba(100, 100, 100, 0.5)" });
+            $($(".search-link")[i]).css({"padding-left": "40px", "background-color": "rgba(100, 100, 100, 0.5)"});
             $($(".search-link")[i]).trigger("click");
 
         } else if (e.altKey && e.keyCode == 37) {
@@ -58,19 +56,24 @@ $(document).keydown(function (e) {
 $(document).on("click", ".link-item", function (e) {
 
     if (e.target.contains($(this).find("svg")[0])) {
-        let dataIndex = $(".link-item").index($(this));
+        if (e.target == $(this).find("svg")[0]) {
+            let dataIndex = $(".link-item").index($(this));
 
-        let self = this;
-        chrome.storage.sync.get("quickLink",function(data){
-            if (!$.isEmptyObject(data)){
-                data.quickLink.splice(dataIndex,1);
-                $(self).fadeOut(200);
-            }
-            chrome.storage.sync.set({"quickLink":data.quickLink})
-        })
-    } else {
-        window.location.href = $(this).attr("data-link")
-        e.preventDefault()
+            let self = this;
+            chrome.storage.sync.get("quickLink", function (data) {
+                if (!$.isEmptyObject(data)) {
+                    data.quickLink.splice(dataIndex, 1);
+                    $(self).fadeOut(200);
+                }
+                chrome.storage.sync.set({"quickLink": data.quickLink})
+                return;
+            })
+
+        }
+
     }
+    window.location.href = $(this).attr("data-link")
+    e.preventDefault()
+
 
 })
