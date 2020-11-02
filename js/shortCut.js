@@ -66,9 +66,11 @@ $(document).on("click", ".link-item", function (e) {
                     $(self).fadeOut(200);
                 }
                 chrome.storage.sync.set({"quickLink": data.quickLink})
-                return;
-            })
 
+                e.preventDefault()
+
+            })
+            return false;
         }
 
     }
