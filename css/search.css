@@ -124,6 +124,13 @@ input::-webkit-input-placeholder {
 
 }
 
+
+.keywords .search-link.active {
+    padding-left: 40px;
+    background-color: rgba(100, 100, 100, 0.5);
+
+}
+
 .search-link:first-child {
     padding-top: 10px;
     border-top-left-radius: 10px;

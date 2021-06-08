@@ -1,5 +1,6 @@
 var translateUrl;
 var searchUrl;
+var searchPos = 1;
 
 $(document).ready(function () {
     initStorage();
@@ -107,7 +108,7 @@ $(".search-input").on("input", function (e) {
                 }
             });
             $(".keywords").fadeIn();
-
+            searchPos=1
         } else {
             $(".keywords").fadeOut();
         }
