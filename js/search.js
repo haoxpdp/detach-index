@@ -1,7 +1,7 @@
 var translateUrl;
 var searchUrl;
-var searchPos = 1;
-
+var searchPos = 0;
+var lastKey = 0;
 $(document).ready(function () {
     initStorage();
     activeSearchRadius();
@@ -108,7 +108,8 @@ $(".search-input").on("input", function (e) {
                 }
             });
             $(".keywords").fadeIn();
-            searchPos=1
+            searchPos=0;
+            lastKey = 0;
         } else {
             $(".keywords").fadeOut();
         }

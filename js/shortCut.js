@@ -1,5 +1,7 @@
+
 $(document).keydown(function (e) {
     console.log("eeeee " + e.keyCode)
+    lastKey = e.keyCode;
     if (e.keyCode == 13 && $(".search-input").is(":focus")) {
         $(".search-icon").trigger("click")
         e.preventDefault();
@@ -48,37 +50,40 @@ $(document).keydown(function (e) {
         } else if (e.altKey && e.keyCode == 39) {
             toogleAcitveSearchWeb(false)
             e.preventDefault()
-        } else {
+        } else if(e.keyCode==40||e.keyCode==38){
             
             var size = $(".search-link").length;
-            
+            if(size==0){
+                return;
+            }
             // down
             if(e.keyCode == 40){
-                e.preventDefault();
-                var text = animateSearchLink(searchPos);
-                console.log(text)
                 searchPos+=1;
                 if(searchPos == size){
                     searchPos = 1;
                 }
-                
-                return;
             }
             if(e.keyCode == 38){
-                e.preventDefault();
-                animateSearchLink(searchPos)
-                searchPos-=1
                 if(searchPos==0){
                     searchPos=size-1
+                }else{
+                    searchPos -= 1
+                    if(searchPos==0){
+                        searchPos = size-1; 
+                    }
+
                 }
-                return;
             }
+            
+            e.preventDefault();
+            animateSearchLink(searchPos);
+            return;
         }
     }
 });
 function animateSearchLink(pos){
  
-    $(".search-link").css({"padding-left":"20px","background-color":"rgba(0, 0, 0, 0.5)"})
+    $(".search-link").css({"padding-left":"20px","background-color":""})
     $($(".search-link")[pos]).css({"padding-left": "40px", "background-color": "rgba(100, 100, 100, 0.5)"});
     console.log($($(".search-link")[pos]))
     $(".search-input").val($($(".search-link")[pos]).find(".search-value").text());
